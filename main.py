@@ -18,5 +18,11 @@ def index():
     return render_template('base.html')
 
 
+@app.route('/index')
+def index2():
+    db_sess = db_session.create_session()
+    return render_template('index.html')
+
+
 if __name__ == '__main__':
     main()
