@@ -1,0 +1,157 @@
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+a {
+  color: #000;
+  text-decoration: none;
+}
+a:hover {
+  color: #000;
+  text-decoration: none;
+}
+ul,
+ol,
+li {
+  list-style: none;
+}
+image {
+  vertical-align: top;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: inherit;
+  font-size: inherit;
+}
+html,
+body {
+  font-weight: 500;
+  height: 100%;
+  line-height: 1;
+  font-size: 18px;
+  color: #000;
+}
+._container {
+  max-width: 70%;
+  box-sizing: content-box;
+  margin: 0px auto;
+}
+.about__container{
+display: flex;}
+
+.wrapper {
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  background: #ffffff;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 50;
+}
+.header__container {
+  display: flex;
+  flex-wrap: nowrap;
+  min-height: 120px;
+  align-items: center;
+}
+@media (max-width: 1000px){
+.header__container {
+  margin-right: 20px
+  justify-content: center;
+  min-height: 120px;
+  align-items: center;
+}
+}
+.header__menu {
+  flex: 0 1 33%;
+}
+@media (max-width: 1500px){
+.header__menu {
+  display: flex;
+  flex-wrap:wrap;
+}
+}
+.menu__list {
+  flex-wrap: wrap;
+  display: flex;
+  padding-top: 20px;
+}
+.menu__item {
+  margin-right: 40px;
+}
+.menu__link {
+  line-height: 171%;
+  font-weight: 600;
+}
+.header__column {
+  flex: 0 1 33%;
+}
+a.header__logo:hover {
+  color: #cfafff;
+}
+.header__logo {
+  font-size: 33px;
+  font-weight: 700;
+  position: center;
+  color: #cfafff;
+  text-align: center;
+}
+@media (max-width: 100px){
+.header__logo {
+  margin-left: 40px;
+  margin-right: 50px;
+}
+}
+.page {
+  flex: 1 1 auto;
+}
+.footer_top {
+  background: rgb(154, 203, 236);
+  padding-top: 50px;
+}
+.footer__main {
+  display: flex;
+}
+.footer__column {
+  flex: 0 1 33%;
+}
+.footer__label {
+  color: rgb(0, 0, 0);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 150%;
+}
+.menu-footer__item{
+  padding-top: 10px;
+}
+.menu-footer__link {
+  color: #ffffff;
+  letter-spacing: 0.2px;
+  margin-left: 10px;
+}
+.contacts-footer {
+  display: flex;
+  flex-direction: column;
+}
+.social__info{
+  margin-top: 10px;
+  font-size: 16px;
+  color: gray;
+}
+.social__item{
+  margin-top: 10px;
+  padding-bottom: 40px;
+}
