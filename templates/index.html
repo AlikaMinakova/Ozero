@@ -29,7 +29,16 @@
             </div>
             <div class="exersise__body">
                 <div class="exersise__column">
-                    ПРОДУКТЫ
+                    {% for item in products%}
+                    <div class="exersise__item">
+                        <div class="exersise__picture">
+                             <a href="/"><img src="/static/img/{{ item.url_img }}" width="300px" height="300px" alt=""></a>
+                        </div>
+                        <div class="exersise__price">{{ item.title }}</div>
+                        <div class="exersise__name">{{ item.price }} ₽</div>
+                        <div class="exersise__address">{{ item.user.address }}</div>
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -43,19 +52,19 @@
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <a href=""><img class="images" src="/static/img/g1.jpg" alt="First slide"></a>
+                    <a href="/"><img class="images" src="/static/img/g1.jpg" alt="First slide"></a>
                     <div class="carousel-caption d-none d-md-block">
                         <h5 class="carousel-text">Для любителей езды</h5>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <a href=""><img class="images" src="/static/img/g2.jpg" alt="Second slide"></a>
+                    <a href="/"><img class="images" src="/static/img/g2.jpg" alt="Second slide"></a>
                     <div class="carousel-caption d-none d-md-block">
                         <h5 class="carousel-text">В вечном поиске</h5>
                     </div>
                 </div>
                 <div class="carousel-item">
-                   <a href=""><img class="images" src="/static/img/g3.jpg" alt="Third slide"></a>
+                   <a href="/"><img class="images" src="/static/img/g3.jpg" alt="Third slide"></a>
                     <div class="carousel-caption d-none d-md-block">
                         <h5 class="carousel-text">Порадовать себя</h5>
                     </div>
@@ -112,7 +121,16 @@
             </div>
             <div class="exersise__body">
                 <div class="exersise__column">
-                    НЕДАВНО ДОБАВЛЕННЫЕ ОБЪЯВЛЕНИЯ
+                    {% for item in new%}
+                    <div class="exersise__item">
+                        <div class="exersise__picture">
+                             <a href="/"><img src="/static/img/{{ item.url_img }}" width="300px" height="300px" alt=""></a>
+                        </div>
+                        <div class="exersise__price">{{ item.title }}</div>
+                        <div class="exersise__name">{{ item.price }} ₽</div>
+                        <div class="exersise__address">{{ item.user.address }}</div>
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
