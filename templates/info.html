@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="_container">
+    <section class="page__exersise exersise">
+        <div class="exersise__body">
+            <div class="input_label">
+                <form method="POST" action="/info/inp_txt">
+                    <div class="input-group-prepend">
+                        <button class="btn toggle-btn dropdown-toggle" type="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">Категория
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/info/Транспорт">Транспорт</a>
+                            <a class="dropdown-item" href="/info/Продукты">Продукты</a>
+                            <a class="dropdown-item" href="/info/Одежда">Одежда</a>
+                            <a class="dropdown-item" href="/info/Электроника">Электроника</a>
+                            <a class="dropdown-item" href="/info/Недвижимость">Недвижимость</a>
+                            <a class="dropdown-item" href="/info/Вакансии">Вакансии</a>
+                            <a class="dropdown-item" href="/info/Хобби">Хобби</a>
+                            <a class="dropdown-item" href="/info/Техника">Техника</a>
+                            <a class="dropdown-item" href="/info/Другое">Другое</a>
+                        </div>
+                        <input class="form-control" name="name" placeholder="Поиск по объявлениям"
+                               aria-label="Text input with dropdown button"/>
+                        <div class="">
+                            <input class="bea_btn" type="submit" value="Найти"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="exersise__column">
+                {% for item in products%}
+                <div class="exersise__item">
+                    <div class="exersise__picture">
+                        <a href="/"><img src="/static/img/{{ item.url_img }}" width="300px" height="300px" alt=""></a>
+                    </div>
+                    <div class="exersise__price">{{ item.title }}</div>
+                    <div class="exersise__name">{{ item.price }} ₽</div>
+                    <div class="exersise__address">{{ item.user.address }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% if message != ''%}
+                <h1 class="message">{{message}}</h1>
+            <div class="img_not_found"><img src="/static/img/not_found.jpg" alt=""></div>
+            {% endif %}
+        </div>
+    </section>
+</div>
+{% endblock %}
