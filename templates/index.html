@@ -32,7 +32,7 @@
                     {% for item in products%}
                     <div class="exersise__item">
                         <div class="exersise__picture">
-                             <a href="/"><img src="/static/img/{{ item.url_img }}" width="300px" height="300px" alt=""></a>
+                             <a href="/product_info/{{ item.id }}"><img src="/static/img/{{ item.url_img }}" width="300px" height="300px" alt=""></a>
                         </div>
                         <div class="exersise__price">{{ item.title }}</div>
                         <div class="exersise__name">{{ item.price }} ₽</div>
@@ -124,7 +124,7 @@
                     {% for item in new%}
                     <div class="exersise__item">
                         <div class="exersise__picture">
-                             <a href="/"><img src="/static/img/{{ item.url_img }}" width="300px" height="300px" alt=""></a>
+                             <a href="/product_info/{{ item.id }}"><img src="/static/img/{{ item.url_img }}" width="300px" height="300px" alt=""></a>
                         </div>
                         <div class="exersise__price">{{ item.title }}</div>
                         <div class="exersise__name">{{ item.price }} ₽</div>

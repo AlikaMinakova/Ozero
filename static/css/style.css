@@ -366,3 +366,61 @@ font-size: 45px;}
 .img_not_found{
 text-align: center;
 }
+.info_about_product{
+max-width: 50%;
+min-width: 50%;
+}
+.pouyt{
+margin-bottom: 20px;
+max-width: 100%;
+min-height: 500px;}
+
+.content_pr{
+margin-top: 20px;
+margin-bottom: 20px;
+font-size: 20px;
+}
+.address{
+ padding-top: 15px;
+ margin-bottom: 20px;
+font-size: 20px;
+}
+.choose_param_product{
+margin-left: 10%;
+max-width: 40%;
+}
+.price{
+ padding-top: 30px;
+font-size: 25px;
+ padding-bottom: 30px;
+}
+.categor_pr{
+font-size: 15px;
+color: gray;
+margin-bottom: 20px;
+}
+.phone_border{
+background: #D0B5F1;
+border-radius: 20px;
+}
+.phone{
+font-size: 30px;
+margin-left: 20px;
+padding: 10px;
+padding-right: 50px;
+}
+.name{
+font-size: 20px;
+margin-left: 20px;
+margin-top: 20px;
+padding-bottom: 20px;
+}
+.same_prod{
+font-size: 30px;
+}
+.same{
+margin-top: 50px;
+}
+.btn-bag_add_prod{
+background: #D46FF7;
+}

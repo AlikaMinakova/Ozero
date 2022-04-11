@@ -1,5 +1,5 @@
 # -*- coding: utf8 -*-
-
+import requests
 from flask_login import login_user, login_required, logout_user
 from flask_restful import Api
 from werkzeug.utils import redirect
@@ -114,6 +114,28 @@ def login():
                                message="Неправильный логин или пароль",
                                form=form)
     return render_template('login.html', title='Авторизация', form=form)
+
+
+@app.route('/product_info/<int:id>', methods=['GET', 'POST'])  # страница товара
+def info_about_product(id):
+    db_sess = db_session.create_session()
+    product = db_sess.query(Products).filter(Products.id == id).first()
+    same_product = db_sess.query(Products).filter((Products.category == product.category), (Products.id != id),
+                                                  (Products.is_private != True))
+    try:
+        geocoder_request = f"http://geocode-maps.yandex.ru/1.x/?apikey=40d1649f-0493-4b70-98ba-98533de7710b&geocode={product.user.address}&format=json"  # Выполняем запрос.
+        response = requests.get(geocoder_request)
+        if response:  # Преобразуем ответ в json-объект
+            json_response = response.json()  # Получаем первый топоним из ответа геокодера. # Согласно описанию ответа, он находится по следующему пути:
+            toponym = json_response["response"]["GeoObjectCollection"]["featureMember"][0][
+                "GeoObject"]  # Полный адрес топонима:
+            toponym_address = toponym["metaDataProperty"]["GeocoderMetaData"]["text"]  # Координаты центра топонима:
+            toponym_coodrinates = toponym["Point"]["pos"]  # Печатаем извлечённые из ответа поля:
+            toponym_coodrinates = toponym_coodrinates.split()
+    except:
+        toponym_coodrinates = [37.617644, 55.755819]
+    return render_template('info_about_product.html', products=product, same_product=same_product,
+                           coor=toponym_coodrinates)
 
 
 if __name__ == '__main__':

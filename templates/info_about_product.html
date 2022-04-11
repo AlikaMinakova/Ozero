@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script src="https://api-maps.yandex.ru/2.1/?apikey=ваш API-ключ&lang=ru_RU" type="text/javascript">
+            </script>
+            <script type="text/javascript">
+            ymaps.ready(init);
+                function init(){
+                    var myMap = new ymaps.Map("map", {
+                        center: [{{coor[1]}}, {{coor[0]}}],
+                        zoom: 17});
+                    var myPlacemark = new ymaps.Placemark([{{coor[1]}}, {{coor[0]}}], null, {
+	                    preset: 'islands#redDotIcon'});
+                    myMap.geoObjects.add(myPlacemark);}
+            </script>
+<section class="page__exersise _container">
+    <div class="exersise__body_pr">
+        <div class="info_about_product">
+            <h2><img class="pouyt" src="/static/img/{{ products.url_img }}"></h2>
+            <div class="dropdown-divider"></div>
+            <div class="content_pr">{{ products.content }}</div>
+            <div class="dropdown-divider"></div>
+            <div class="address">{{ products.user.address }}</div>
+            <div id="map" style="width: 600px; height: 400px"></div>
+            <div class="dropdown-divider"></div>
+        </div>
+        <div class="choose_param_product">
+            <div class="title">{{ products.title }}</div>
+            <div class="price">{{ products.price }} ₽</div>
+            <div class="categor_pr">Категория: {{ products.category }}</div>
+            <div class="phone_border">
+                <div class="phone">{{ products.user.phone }}</div>
+            </div>
+            <div class="name">{{ products.user.name }} {{ products.user.surname }}</div>
+            {% if products.user.id != current_user.id %}
+            <a href="/">
+                <button type="button" class="btn btn-primary">Объявления пользователя</button>
+            </a>
+            {% if current_user.is_authenticated %}
+            <a href="/">
+                <button type="button" class="btn btn-bag_add_prod">В корзину</button>
+            </a>
+            {% else %}
+            <a href="/login">
+                <button type="button" class="btn btn-bag_add_prod">В корзину</button>
+            </a>
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="same_prod">Похожие товары</div>
+    <div class="same exersise__column">
+        {% for item in same_product %}
+        <div class="exersise__item">
+            <div class="exersise__picture">
+                <a href="/"><img src="/static/img/{{ item.url_img }}" width="300px"
+                                                           height="300px" alt=""></a>
+            </div>
+            <div class="exersise__price">{{ item.title }}</div>
+            <div class="exersise__name">{{ item.price }} ₽</div>
+            <div class="exersise__address">{{ item.user.address }}</div>
+
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
