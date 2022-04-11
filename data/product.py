@@ -22,3 +22,4 @@ class Products(SqlAlchemyBase, SerializerMixin):
     user_id = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey("users.id"))
     user = orm.relation('User')
+    bag = orm.relation("Bag", back_populates='product_bag')
