@@ -37,9 +37,15 @@
                 <button type="button" class="btn btn-primary">Объявления пользователя</button>
             </a>
             {% if current_user.is_authenticated %}
-            <a href="/">
+            {% if have %}
+            <a href="/bag/{{current_user.id}}">
+                <button type="button" class="btn btn-bag_enter_prod">Перейти в корзину</button>
+            </a>
+            {% else %}
+            <a href="/add_product_bag/{{current_user.id}}/{{products.id}}">
                 <button type="button" class="btn btn-bag_add_prod">В корзину</button>
             </a>
+            {% endif %}
             {% else %}
             <a href="/login">
                 <button type="button" class="btn btn-bag_add_prod">В корзину</button>
@@ -53,7 +59,7 @@
         {% for item in same_product %}
         <div class="exersise__item">
             <div class="exersise__picture">
-                <a href="/"><img src="/static/img/{{ item.url_img }}" width="300px"
+                <a href="/product_info/{{ item.id }}"><img src="/static/img/{{ item.url_img }}" width="300px"
                                                            height="300px" alt=""></a>
             </div>
             <div class="exersise__price">{{ item.title }}</div>
