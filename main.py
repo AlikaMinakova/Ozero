@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 import requests
-from flask_login import login_user, login_required, logout_user
-from flask_restful import Api
+from flask_login import login_user, login_required, logout_user, current_user
+from flask_restful import Api, abort
 from werkzeug.utils import redirect
 from flask import Flask, render_template, request
 from data.product import Products
@@ -11,6 +11,8 @@ from data.loginform import LoginForm
 from data.user import User
 from forms.user import RegisterForm
 from flask_login import LoginManager
+
+from forms.user_set import SetForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'OZERO_secret_key'
@@ -136,6 +138,51 @@ def info_about_product(id):
         toponym_coodrinates = [37.617644, 55.755819]
     return render_template('info_about_product.html', products=product, same_product=same_product,
                            coor=toponym_coodrinates)
+
+
+@app.route('/account/<int:id>', methods=['GET', 'POST'])  # настройки аккаунта
+@login_required
+def edit_user(id):
+    form = SetForm()
+    if request.method == "GET":
+        db_sess = db_session.create_session()
+        user = db_sess.query(User).filter(User.id == id).first()
+        if user:
+            form.name.data = user.name
+            form.surname.data = user.surname
+            form.address.data = user.address
+        else:
+            abort(404)
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        user = db_sess.query(User).filter(User.id == id).first()
+        if user:
+            user.name = form.name.data
+            user.surname = form.surname.data
+            user.address = form.address.data
+            db_sess.commit()
+            return redirect('/info/all')
+        else:
+            abort(404)
+    return render_template('user_set.html',
+                           form=form
+                           )
+
+
+@app.route('/account')  # Страница пользователя
+def account():
+    db_sess = db_session.create_session()
+    products = db_sess.query(Products).filter(
+        (Products.user == current_user), (Products.is_private != True))
+    return render_template('name.html', products=products)
+
+
+@app.route('/account_private')  # Страница пользователя с приватными записями
+def account_private():
+    db_sess = db_session.create_session()
+    products = db_sess.query(Products).filter(
+        (Products.user == current_user), (Products.is_private == True))
+    return render_template('private.html', products=products)
 
 
 if __name__ == '__main__':

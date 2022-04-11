@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="page">
+    <section class="page__exersise exersise">
+        <div class="exersise__container _container">
+            <div class="exersise__header header-block">
+                <h2 class="header-block__title">Черновики</h2>
+                <div class="dropdown-divider"></div>
+                <div class="exersise__body">
+                    <div class="exersise__column">
+                        {% for item in products%}
+                        <div class="exersise__item">
+                            <div class="exersise__picture">
+                                 <a href="/product_info/{{ item.id }}"><img src="/static/img/{{ item.url_img }}" width="300px" height="300px" alt=""></a>
+                            </div>
+                            <div class="exersise__price">{{ item.title }}
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                        ...
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item red" href="/">Редактировать</a>
+                                    <a class="dropdown-item red" href="/">Удалить</a>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="exersise__name">{{ item.price }} ₽</div>
+                            <div class="exersise__address">{{ item.user.address }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

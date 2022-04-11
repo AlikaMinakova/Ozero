@@ -66,9 +66,9 @@
                                        aria-haspopup="true" aria-expanded="false">{{ current_user.name }} {{
                                         current_user.surname }}</a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="/">Настройки</a>
-                                        <a class="dropdown-item" href="/">Публикации</a>
-                                        <a class="dropdown-item" href="/">Черновики</a>
+                                        <a class="dropdown-item" href="/account/{{current_user.id}}">Настройки</a>
+                                        <a class="dropdown-item" href="/account">Публикации</a>
+                                        <a class="dropdown-item" href="/account_private">Черновики</a>
                                         <a class="dropdown-item" href="/">Добавить объявление</a>
                                         <a class="dropdown-item" href="/logout">Выход</a>
                                     </div>
