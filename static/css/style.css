@@ -487,3 +487,15 @@ margin-top: 50%;
 text-align: center;
 font-size: 30px;
 }
+nav.navbar .dropdown:hover > .dropdown-menu {
+ display: block;
+}
+.btn-secondary{
+align-items: center;
+color: black;
+background: white;
+padding-top: 0px;
+margin-left: 20px;}
+
+
+
