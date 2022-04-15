@@ -1,4 +1,6 @@
 # -*- coding: utf8 -*-
+import os
+
 import requests
 from flask_login import login_user, login_required, logout_user, current_user
 from flask_restful import Api
@@ -12,6 +14,7 @@ from data.product import Products
 from data import db_session
 from data.loginform import LoginForm
 from data.user import User
+from forms.products import ProductsForm
 from forms.user import RegisterForm
 from flask_login import LoginManager
 
@@ -185,6 +188,39 @@ def bag(user_id):
     bag = db_sess.query(Bag).filter(
         (Bag.user_id_bag == user_id))
     return render_template('bag.html', bag=bag)
+
+
+@app.route('/products', methods=['GET', 'POST'])  # добавить товар
+@login_required
+def add_news():
+    form = ProductsForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            db_sess = db_session.create_session()
+            products = Products()
+            products.title = form.title.data
+            products.content = form.content.data
+            products.is_private = form.is_private.data
+            products.price = form.price.data
+            try:
+                file1 = request.files['file1']
+                path = os.path.join(app.config['UPLOAD_FOLDER'], file1.filename)
+                file1.save(path)
+                products.url_img = file1.filename
+                products.category = form.category.data
+                current_user.product.append(products)
+                db_sess.merge(current_user)
+                db_sess.commit()
+                return redirect('/info/all')
+            except:
+                products.url_img = 'no_picture.png'
+                products.category = form.category.data
+                current_user.product.append(products)
+                db_sess.merge(current_user)
+                db_sess.commit()
+                return redirect('/info/all')
+    return render_template('products.html', title='Добавление товара',
+                           form=form)
 
 
 if __name__ == '__main__':
