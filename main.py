@@ -185,5 +185,13 @@ def account_private():
     return render_template('private.html', products=products)
 
 
+@app.route('/user_prod/<int:id>', methods=['GET', 'POST'])  # Страница продавца
+def user_prod(id):
+    db_sess = db_session.create_session()
+    products = db_sess.query(Products).filter(
+        (Products.user_id == id), (Products.is_private != True))
+    return render_template('seller.html', products=products)
+
+
 if __name__ == '__main__':
     main()

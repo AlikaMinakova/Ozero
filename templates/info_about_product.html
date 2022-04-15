@@ -33,7 +33,7 @@
             </div>
             <div class="name">{{ products.user.name }} {{ products.user.surname }}</div>
             {% if products.user.id != current_user.id %}
-            <a href="/">
+            <a href="/user_prod/{{products.user.id}}">
                 <button type="button" class="btn btn-primary">Объявления пользователя</button>
             </a>
             {% if current_user.is_authenticated %}
