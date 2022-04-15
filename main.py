@@ -1,7 +1,6 @@
 # -*- coding: utf8 -*-
 
 import os
-
 import requests
 from flask_login import login_user, login_required, logout_user, current_user
 from flask_restful import Api
@@ -9,16 +8,13 @@ from werkzeug.utils import redirect
 from flask import Flask, render_template, request
 from data.product import Products
 from werkzeug.exceptions import abort
-
 from data.bag import Bag
-
 from data import db_session
 from data.loginform import LoginForm
 from data.user import User
 from forms.products import ProductsForm
 from forms.user import RegisterForm
 from flask_login import LoginManager
-
 from forms.user_set import SetForm
 
 app = Flask(__name__)
@@ -26,6 +22,8 @@ app.config['SECRET_KEY'] = 'OZERO_secret_key'
 login_manager = LoginManager()
 login_manager.init_app(app)
 api = Api(app)
+UPLOAD_FOLDER = './static/img'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 @login_manager.user_loader  # функция для получения пользователя
