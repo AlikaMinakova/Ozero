@@ -279,5 +279,72 @@ def add_news():
                            form=form)
 
 
+@app.route('/products/<int:id>', methods=['GET', 'POST'])  # редактировать товар
+@login_required
+def edit_news(id):
+    form = ProductsForm()
+    if request.method == "GET":
+        db_sess = db_session.create_session()
+        products = db_sess.query(Products).filter(Products.id == id,
+                                                  Products.user == current_user
+                                                  ).first()
+        if products:
+            form.title.data = products.title
+            form.content.data = products.content
+            form.is_private.data = products.is_private
+            form.price.data = products.price
+            form.category.data = products.category
+            form.url_image.data = products.url_img
+        else:
+            abort(404)
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        products = db_sess.query(Products).filter(Products.id == id,
+                                                  Products.user == current_user
+                                                  ).first()
+        if products:
+            products.title = form.title.data
+            products.content = form.content.data
+            products.is_private = form.is_private.data
+            products.price = form.price.data
+            products.category = form.category.data
+            try:
+                file1 = request.files['file1']
+                path = os.path.join(app.config['UPLOAD_FOLDER'], file1.filename)
+                file1.save(path)
+                products.url_img = file1.filename
+                db_sess.commit()
+                return redirect('/info/all')
+            except:
+                db_sess.commit()
+                return redirect('/info/all')
+        else:
+            abort(404)
+    return render_template('products.html',
+                           title='Редактирование публикации',
+                           form=form
+                           )
+
+
+@app.route('/products_delete/<int:pr_id>', methods=['GET', 'POST'])  # удалить товар
+@login_required
+def news_delete(pr_id):
+    db_sess = db_session.create_session()
+    products = db_sess.query(Products).all()
+    bag = db_sess.query(Bag).all()
+    if products:
+        for item_product in products:
+            if item_product.id == pr_id:
+                if bag:
+                    for item in bag:
+                        if item.product_id_bag == pr_id:
+                            db_sess.delete(item)
+                db_sess.delete(item_product)
+        db_sess.commit()
+    else:
+        abort(404)
+    return redirect('/info/all')
+
+
 if __name__ == '__main__':
     main()
