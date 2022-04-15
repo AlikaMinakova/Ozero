@@ -238,6 +238,19 @@ def bag_delete(id):
     return redirect('/info/all')
 
 
+@app.route('/bag_delete_all_products/<int:id>', methods=['GET', 'POST'])  # Удаление всего из корзины
+def bag_delete_all_products(id):
+    db_sess = db_session.create_session()
+    bag = db_sess.query(Bag).filter(Bag.user_id_bag == id)
+    if bag:
+        for item in bag:
+            db_sess.delete(item)
+        db_sess.commit()
+    else:
+        abort(404)
+    return redirect('/info/all')
+
+
 @app.route('/bag/<int:user_id>')  # Страница корзины
 def bag(user_id):
     db_sess = db_session.create_session()
