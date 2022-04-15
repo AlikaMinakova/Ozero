@@ -53,6 +53,11 @@ def index():
     return render_template('index.html', products=products[:4], new=products[-4:])
 
 
+@app.route('/drive')  # страница доставки
+def drive():
+    return render_template('drive.html')
+
+
 @app.route('/info/<string:category>', methods=['GET', 'POST'])  # каталог
 def info(category):
     db_sess = db_session.create_session()
