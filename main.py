@@ -3,7 +3,7 @@
 import os
 
 import requests
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, current_user
 from flask_restful import Api
 from werkzeug.utils import redirect
 from flask import Flask, render_template, request
