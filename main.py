@@ -208,6 +208,30 @@ def user_prod(id):
     return render_template('seller.html', products=products)
 
 
+@app.route('/delete_user')  # удаление пользователя
+def delete_user():
+    db_sess = db_session.create_session()
+    user = db_sess.query(User).filter((User.id == current_user.id))
+    products = db_sess.query(Products).filter((Products.user_id == current_user.id))
+    bag = db_sess.query(Bag).all()
+    if products:
+        for item_product in products:
+            if bag:
+                for item in bag:
+                    if item.product_id_bag == item_product.id:
+                        db_sess.delete(item)
+                    if item.user_id_bag == current_user.id:
+                        db_sess.delete(item)
+            db_sess.delete(item_product)
+    else:
+        abort(404)
+    for item_user in user:
+        if item_user.id == current_user.id:
+            db_sess.delete(item_user)
+    db_sess.commit()
+    return redirect('/register')
+
+
 @app.route('/add_product_bag/<int:user_id>/<int:product_id>')  # Добавление товара в корзину
 def add_product_bag(user_id, product_id):
     db_sess = db_session.create_session()

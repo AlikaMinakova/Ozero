@@ -33,6 +33,33 @@
         {% endfor %}
         </p>
         <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+        <p><a href="/delete_user" class="dropdown-item red" data-toggle="modal"
+              data-target="#exampleModalCenter">
+            <button type="button" class="btn btn-danger">Удалить аккаунт</button>
+        </a></p>
+
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Подтверждение</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Вы действительно хотите удалить аккаунт? Данные будут утеряны навсегда!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена
+                        </button>
+                        <button type="button" class="btn btn-secondary delete-btn"><a href="/delete_user">Удалить</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         {{message}}
     </form>
 </div>
