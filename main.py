@@ -1,14 +1,21 @@
 # -*- coding: utf8 -*-
+
+import os
+
 import requests
-from flask_login import login_user, login_required, logout_user, current_user
-from flask_restful import Api, abort
+from flask_login import login_user, login_required, logout_user
+from flask_restful import Api
 from werkzeug.utils import redirect
 from flask import Flask, render_template, request
 from data.product import Products
+from werkzeug.exceptions import abort
+
+from data.bag import Bag
 
 from data import db_session
 from data.loginform import LoginForm
 from data.user import User
+from forms.products import ProductsForm
 from forms.user import RegisterForm
 from flask_login import LoginManager
 
@@ -125,6 +132,11 @@ def info_about_product(id):
     same_product = db_sess.query(Products).filter((Products.category == product.category), (Products.id != id),
                                                   (Products.is_private != True))
     try:
+        bag = db_sess.query(Bag).filter((Bag.user_id_bag == current_user.id),
+                                        (Bag.product_id_bag == product.id)).first()
+    except:
+        bag = False
+    try:
         geocoder_request = f"http://geocode-maps.yandex.ru/1.x/?apikey=40d1649f-0493-4b70-98ba-98533de7710b&geocode={product.user.address}&format=json"  # Выполняем запрос.
         response = requests.get(geocoder_request)
         if response:  # Преобразуем ответ в json-объект
@@ -136,7 +148,10 @@ def info_about_product(id):
             toponym_coodrinates = toponym_coodrinates.split()
     except:
         toponym_coodrinates = [37.617644, 55.755819]
-    return render_template('info_about_product.html', products=product, same_product=same_product,
+    if bag:
+        return render_template('info_about_product.html', products=product, same_product=same_product, have=True,
+                               coor=toponym_coodrinates)
+    return render_template('info_about_product.html', products=product, same_product=same_product, have=False,
                            coor=toponym_coodrinates)
 
 
@@ -191,6 +206,77 @@ def user_prod(id):
     products = db_sess.query(Products).filter(
         (Products.user_id == id), (Products.is_private != True))
     return render_template('seller.html', products=products)
+
+
+@app.route('/add_product_bag/<int:user_id>/<int:product_id>')  # Добавление товара в корзину
+def add_product_bag(user_id, product_id):
+    db_sess = db_session.create_session()
+    bag_bag = db_sess.query(Bag).filter((Bag.product_id_bag == product_id), (Bag.user_id_bag == user_id)).first()
+    if not bag_bag:
+        bag = Bag()
+        bag.user_id_bag = user_id
+        bag.product_id_bag = product_id
+        db_sess.add(bag)
+        db_sess.commit()
+    db_sess = db_session.create_session()
+    bag = db_sess.query(Bag).filter(
+        (Bag.user_id_bag == user_id))
+    return render_template('bag.html', bag=bag)
+
+
+@app.route('/bag_delete/<int:id>', methods=['GET', 'POST'])  # Удаление товара из корзины
+def bag_delete(id):
+    db_sess = db_session.create_session()
+    bag = db_sess.query(Bag).all()
+    if bag:
+        for item in bag:
+            if item.id == id:
+                db_sess.delete(item)
+        db_sess.commit()
+    else:
+        abort(404)
+    return redirect('/info/all')
+
+
+@app.route('/bag/<int:user_id>')  # Страница корзины
+def bag(user_id):
+    db_sess = db_session.create_session()
+    bag = db_sess.query(Bag).filter(
+        (Bag.user_id_bag == user_id))
+    return render_template('bag.html', bag=bag)
+
+
+@app.route('/products', methods=['GET', 'POST'])  # добавить товар
+@login_required
+def add_news():
+    form = ProductsForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            db_sess = db_session.create_session()
+            products = Products()
+            products.title = form.title.data
+            products.content = form.content.data
+            products.is_private = form.is_private.data
+            products.price = form.price.data
+            try:
+                file1 = request.files['file1']
+                path = os.path.join(app.config['UPLOAD_FOLDER'], file1.filename)
+                file1.save(path)
+                products.url_img = file1.filename
+                products.category = form.category.data
+                current_user.product.append(products)
+                db_sess.merge(current_user)
+                db_sess.commit()
+                return redirect('/info/all')
+            except:
+                products.url_img = 'no_picture.png'
+                products.category = form.category.data
+                current_user.product.append(products)
+                db_sess.merge(current_user)
+                db_sess.commit()
+                return redirect('/info/all')
+    return render_template('products.html', title='Добавление товара',
+                           form=form)
 
 
 if __name__ == '__main__':

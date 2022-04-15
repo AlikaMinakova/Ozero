@@ -40,11 +40,11 @@
                         </li>
                         {% if current_user.is_authenticated %}
                         <li class="menu__item">
-                            <a href="/}}" class="menu__link">Корзина</a>
+                            <a href="/bag/{{current_user.id}}" class="menu__link">Корзина</a>
                         </li>
                         {% else %}
                         <li class="menu__item">
-                            <a href="/" class="menu__link">Корзина</a>
+                            <a href="/login" class="menu__link">Корзина</a>
                         </li>
                         {% endif %}
                     </ul>
@@ -66,9 +66,9 @@
                                        aria-haspopup="true" aria-expanded="false">{{ current_user.name }} {{
                                         current_user.surname }}</a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="/account/{{current_user.id}}">Настройки</a>
-                                        <a class="dropdown-item" href="/account">Публикации</a>
-                                        <a class="dropdown-item" href="/account_private">Черновики</a>
+                                        <a class="dropdown-item" href="/">Настройки</a>
+                                        <a class="dropdown-item" href="/">Публикации</a>
+                                        <a class="dropdown-item" href="/">Черновики</a>
                                         <a class="dropdown-item" href="/">Добавить объявление</a>
                                         <a class="dropdown-item" href="/logout">Выход</a>
                                     </div>
@@ -106,7 +106,7 @@
                     <div class="footer__menu menu-footer">
                         <ul class="menu-footer__list">
                             <li class="menu-footer__item"><a href="/" class="menu-footer__link">Доставка</a></li>
-                            <li class="menu-footer__item"><a href="/" class="menu-footer__link">Каталог</a></li>
+                            <li class="menu-footer__item"><a href="/info/all" class="menu-footer__link">Каталог</a></li>
                             <li class="menu-footer__item"><a href="/" class="menu-footer__link">Главная</a></li>
                         </ul>
                     </div>
@@ -115,10 +115,10 @@
                     <div class="footer__label">Часто ищут</div>
                     <div class="footer__menu menu-footer">
                         <ul class="menu-footer__list">
-                            <li class="menu-footer__item"><a href="/" class="menu-footer__link">Недвижимость</a></li>
-                            <li class="menu-footer__item"><a href="/" class="menu-footer__link">Техника</a></li>
-                            <li class="menu-footer__item"><a href="/" class="menu-footer__link">Продукты</a></li>
-                            <li class="menu-footer__item"><a href="/" class="menu-footer__link">Транспорт</a></li>
+                            <li class="menu-footer__item"><a href="/info/Недвижимость" class="menu-footer__link">Недвижимость</a></li>
+                            <li class="menu-footer__item"><a href="/info/Техника" class="menu-footer__link">Техника</a></li>
+                            <li class="menu-footer__item"><a href="/info/Продукты" class="menu-footer__link">Продукты</a></li>
+                            <li class="menu-footer__item"><a href="/info/Транспорт" class="menu-footer__link">Транспорт</a></li>
                         </ul>
                         </ul>
                     </div>

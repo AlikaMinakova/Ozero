@@ -446,3 +446,44 @@ color: gray;
 font-size: 15px;
 max-width: 300px;
 }
+.title{
+font-size: 35px;
+}
+.btn-bag_enter_prod{
+background: #B4EE3F;
+}
+.title_bag{
+display: flex;
+}
+.del_pr_all_bag{
+width: 10%;
+margin-left: auto;
+max-height: 80px;
+}
+.del_pr_all_bag_out{
+background: #FA6868;
+padding: 5px;
+border-radius: 5px;
+}
+.product_column{
+display: flex;}
+
+.picture_bag{
+width: 50%;
+}
+.info_prod_bag{
+width: 40%;
+}
+.button_delete{
+width: 10%;
+}
+.button_delete_delete{
+background: #DAF7A6;
+border-radius: 5px;
+padding: 10px;
+margin-top: 50%;
+}
+.title_text{
+text-align: center;
+font-size: 30px;
+}

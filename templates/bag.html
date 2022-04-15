@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="page">
+    <section class="page__exersise exersise">
+        <div class="exersise__container _container">
+            <div class="exersise__header header-block">
+                <div class="title_bag">
+                    <h2 class="header-block__title">Корзина</h2>
+                    <div class="del_pr_all_bag"><a href="/">
+                        <button class="del_pr_all_bag_out">Очистить корзину</button>
+                    </a></div>
+                </div>
+                <div class="dropdown-divider"></div>
+                {% for item in bag%}
+                <div class="product_column">
+                    <div class="picture_bag">
+                        <a href="/product_info/{{ item.product_id_bag }}"><img
+                                src="/static/img/{{ item.product_bag.url_img }}" width="300px" height="300px"
+                                alt=""></a>
+                    </div>
+                    <div class="info_prod_bag">
+                        <div class="exersise__price">{{ item.product_bag.title }}</div>
+                        <div class="exersise__name">{{ item.product_bag.price }} ₽</div>
+                        <div class="exersise__name">{{ item.product_bag.user.address }}</div>
+                    </div>
+                    <div class="button_delete"><a href="/bag_delete/{{item.id}}">
+                        <button class="button_delete_delete">удалить</button>
+                    </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
