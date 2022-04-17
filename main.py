@@ -45,7 +45,8 @@ def main():
     api.add_resource(users_resources.UsersResource, '/api/v2/users/<int:user_id>')
     api.add_resource(products_resources.ProductsListResource, '/api/v2/products')
     api.add_resource(products_resources.ProductsResource, '/api/v2/products/<int:products_id>')
-    app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
 
 
 @app.route('/')  # Главная
