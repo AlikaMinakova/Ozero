@@ -9,7 +9,7 @@ from flask import Flask, render_template, request
 from data.product import Products
 from werkzeug.exceptions import abort
 from data.bag import Bag
-from data import db_session
+from data import db_session, products_resources
 from data.loginform import LoginForm
 from data.user import User
 from forms.products import ProductsForm
@@ -41,6 +41,8 @@ def logout():
 
 def main():
     db_session.global_init("db/shop.db")
+    api.add_resource(products_resources.ProductsListResource, '/api/v2/products')
+    api.add_resource(products_resources.ProductsResource, '/api/v2/products/<int:products_id>')
     app.run()
 
 
